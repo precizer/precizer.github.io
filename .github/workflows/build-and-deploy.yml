@@ -1,4 +1,4 @@
-name: Build & Deploy site (manual)
+name: Build & Deploy site
 
 on:
   workflow_dispatch:
