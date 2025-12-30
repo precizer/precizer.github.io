@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: precizer/precizer
-          ref: v0.4.4
+          ref: v0.4.0
           path: precizer
 
       - name: Create index.md from precizer README (and RU)
