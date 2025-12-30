@@ -67,6 +67,11 @@ jobs:
           source: site-src
           destination: public
 
+      - name: Fix permissions for public/
+        run: |
+          sudo chown -R "$USER:$USER" public
+          sudo chmod -R u+rwX public
+
       - name: Install build dependencies
         run: |
           sudo apt-get update
