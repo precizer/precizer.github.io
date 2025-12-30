@@ -37,11 +37,11 @@ jobs:
             --exclude "public/" \
             ./ site-src/
 
-      - name: Checkout precizer sources (main)
+      - name: Checkout precizer sources
         uses: actions/checkout@v4
         with:
           repository: precizer/precizer
-          ref: main
+          ref: v0.4.4
           path: precizer
 
       - name: Create index.md from precizer README (and RU)
