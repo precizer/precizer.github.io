@@ -1,0 +1,114 @@
+name: Build & Deploy site (manual)
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout precizer.github.io repo
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare Jekyll source (site-src) from this repo + precizer READMEs
+        run: |
+          set -euo pipefail
+
+          rm -rf site-src public
+          mkdir -p site-src/ru
+
+          # Копируем ВСЁ из текущей репы в site-src (включая твой _config.yml),
+          # кроме служебных директорий.
+          # (Если у тебя есть CNAME/favicon/assets — они тоже попадут в сайт.)
+          rsync -a \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            --exclude "site-src/" \
+            --exclude "public/" \
+            ./ site-src/
+
+      - name: Checkout precizer sources (main)
+        uses: actions/checkout@v4
+        with:
+          repository: precizer/precizer
+          ref: main
+          path: precizer
+
+      - name: Create index.md from precizer README (and RU)
+        run: |
+          set -euo pipefail
+
+          # Jekyll требует front matter, чтобы обработать markdown как страницу
+          {
+            echo '---'
+            echo '---'
+            cat precizer/README.md
+          } > site-src/index.md
+
+          {
+            echo '---'
+            echo '---'
+            cat precizer/README.ru.md
+          } > site-src/ru/index.md
+
+      - name: Build Jekyll site -> ./public
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: site-src
+          destination: public
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make libpcre2-dev llvm upx gh rsync
+
+      - name: Build coverage
+        working-directory: precizer
+        run: |
+          set -euo pipefail
+          make coverage
+          test -d ".builds/testitall/coverage/report"
+
+      - name: Copy coverage + raw READMEs into public/
+        run: |
+          set -euo pipefail
+
+          # coverage -> /.code_coverage_report/
+          mkdir -p "public/.code_coverage_report"
+          rsync -a --delete \
+            "precizer/.builds/testitall/coverage/report/" \
+            "public/.code_coverage_report/"
+
+          # страховка на случай особенностей отдачи скрытых путей
+          touch public/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
