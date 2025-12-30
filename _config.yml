@@ -1,13 +1,11 @@
 title: Precizer<br>Verify file checksums at scale
 description: precizer is a lightweight and blazing-fast CLI application designed for file integrity verification and comparison, making it particularly useful for checking synchronization results. The program recursively traverses directories, generating a database of files and their checksums for quick and efficient comparisons
-show_downloads: false
 theme: jekyll-theme-cayman
+
 markdown: kramdown
 kramdown:
   input: GFM
-github:
-  is_project_page: true
-  repository_url: https://github.com/precizer/precizer
+
 show_downloads: true
 github:
   is_project_page: true
