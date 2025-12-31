@@ -48,7 +48,7 @@ jobs:
           set -euo pipefail
 
           rsync -a \
-            precizer/.html site-src/
+            precizer/.html site-src/; ls -la site-src/
 
           # Jekyll требует front matter, чтобы обработать markdown как страницу
           {
