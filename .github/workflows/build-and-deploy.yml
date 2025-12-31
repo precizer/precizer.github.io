@@ -42,19 +42,25 @@ jobs:
           ref: v0.4.0
           path: precizer
 
-      - name: Create index.md from precizer README (and RU)
+      - name: Create README pages (GitHub-compatible links)
         run: |
           set -euo pipefail
 
-          # Jekyll требует front matter, чтобы обработать markdown как страницу
+          # на всякий случай уберём возможные старые файлы
+          rm -f site-src/index.md site-src/README.md site-src/README.ru.md
+
+          # English: файл называется README.md (как в репе), но отдаётся с /
           {
             echo '---'
+            echo 'permalink: /'
             echo '---'
             cat precizer/README.md
-          } > site-src/index.md
+          } > site-src/README.md
 
+          # Russian: файл называется README.ru.md (как в репе), отдаётся с /ru/
           {
             echo '---'
+            echo 'permalink: /ru/'
             echo '---'
             cat precizer/README.ru.md
           } > site-src/README.ru.md
