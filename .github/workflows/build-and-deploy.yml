@@ -51,7 +51,7 @@ jobs:
             echo '---'
             echo '---'
             cat precizer/README.md
-          } > site-src/README.md
+          } > site-src/index.md
 
           {
             echo '---'
