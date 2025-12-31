@@ -25,7 +25,6 @@ jobs:
           set -euo pipefail
 
           rm -rf site-src public
-          mkdir -p site-src/ru
 
           # Копируем ВСЁ из текущей репы в site-src (включая _config.yml),
           # кроме служебных директорий.
@@ -47,21 +46,18 @@ jobs:
         run: |
           set -euo pipefail
 
-          rsync -a \
-            precizer/.html site-src/; ls -la site-src/
-
           # Jekyll требует front matter, чтобы обработать markdown как страницу
           {
             echo '---'
             echo '---'
             cat precizer/README.md
-          } > site-src/index.md
+          } > site-src/README.md
 
           {
             echo '---'
             echo '---'
             cat precizer/README.ru.md
-          } > site-src/ru/index.md
+          } > site-src/README.ru.md
 
       - name: Build Jekyll site -> ./public
         uses: actions/jekyll-build-pages@v1
@@ -95,6 +91,9 @@ jobs:
           rsync -a --delete \
             "precizer/.builds/testitall/coverage/report/" \
             "public/.code_coverage_report/"
+
+          rsync -a \
+            precizer/.html public/
 
           # страховка на случай особенностей отдачи скрытых путей
           touch public/.nojekyll
