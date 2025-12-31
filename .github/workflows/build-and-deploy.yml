@@ -93,7 +93,7 @@ jobs:
             "public/.code_coverage_report/"
 
           rsync -a \
-            precizer/.html public/
+            precizer/.html public/; ls -la public/
 
           # страховка на случай особенностей отдачи скрытых путей
           touch public/.nojekyll
