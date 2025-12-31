@@ -60,7 +60,7 @@ jobs:
           # Russian: файл называется README.ru.md (как в репе), отдаётся с /ru/
           {
             echo '---'
-            echo 'permalink: /ru/'
+            echo 'permalink: /README.ru.html'
             echo '---'
             cat precizer/README.ru.md
           } > site-src/README.ru.md
