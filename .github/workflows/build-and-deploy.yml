@@ -27,9 +27,8 @@ jobs:
           rm -rf site-src public
           mkdir -p site-src/ru
 
-          # Копируем ВСЁ из текущей репы в site-src (включая твой _config.yml),
+          # Копируем ВСЁ из текущей репы в site-src (включая _config.yml),
           # кроме служебных директорий.
-          # (Если у тебя есть CNAME/favicon/assets — они тоже попадут в сайт.)
           rsync -a \
             --exclude ".git/" \
             --exclude ".github/" \
@@ -47,6 +46,9 @@ jobs:
       - name: Create index.md from precizer README (and RU)
         run: |
           set -euo pipefail
+
+          rsync -a \
+            ./.html site-src/
 
           # Jekyll требует front matter, чтобы обработать markdown как страницу
           {
