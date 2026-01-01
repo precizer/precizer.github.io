@@ -92,11 +92,11 @@ jobs:
         run: |
           set -euo pipefail
 
-          # coverage -> /.code_coverage_report/
-          mkdir -p "public/.code_coverage_report"
+          # coverage -> /code_coverage_report/
+          mkdir -p "public/code_coverage_report"
           rsync -a --delete \
             "precizer/.builds/testitall/coverage/report/" \
-            "public/.code_coverage_report/"
+            "public/code_coverage_report/"
 
           rsync -a \
             precizer/.html public/; ls -la public/
