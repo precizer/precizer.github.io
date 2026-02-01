@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: precizer/precizer
-          ref: master
+          ref: main
           path: precizer
 
       - name: Create README pages (GitHub-compatible links)
