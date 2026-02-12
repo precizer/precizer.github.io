@@ -42,12 +42,12 @@ jobs:
           ref: main
           path: precizer
 
-      - name: Create README pages (GitHub-compatible links)
+      - name: Create markdown pages (GitHub-compatible links)
         run: |
           set -euo pipefail
 
           # Just in case, remove any old files
-          rm -f site-src/index.md site-src/README.md site-src/README.ru.md
+          rm -f site-src/index.md site-src/README.md site-src/README.ru.md site-src/CONTRIBUTING.md site-src/CHANGELOG.md
 
           # English: file is named README.md (as in the repo), but is served at /
           {
@@ -64,6 +64,22 @@ jobs:
             echo '---'
             cat precizer/README.ru.md
           } > site-src/README.ru.md
+
+          # Contributing guide: file is named CONTRIBUTING.md, served at /CONTRIBUTING.html
+          {
+            echo '---'
+            echo 'permalink: /CONTRIBUTING.html'
+            echo '---'
+            cat precizer/CONTRIBUTING.md
+          } > site-src/CONTRIBUTING.md
+
+          # Changelog: file is named CHANGELOG.md, served at /CHANGELOG.html
+          {
+            echo '---'
+            echo 'permalink: /CHANGELOG.html'
+            echo '---'
+            cat precizer/CHANGELOG.md
+          } > site-src/CHANGELOG.md
 
       - name: Build Jekyll site -> ./public
         uses: actions/jekyll-build-pages@v1
