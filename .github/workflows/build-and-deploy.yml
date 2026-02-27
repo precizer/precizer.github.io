@@ -47,7 +47,7 @@ jobs:
           set -euo pipefail
 
           # Just in case, remove any old files
-          rm -f site-src/index.md site-src/README.md site-src/README.ru.md site-src/CONTRIBUTING.md site-src/CHANGELOG.md
+          rm -f site-src/index.md site-src/README.md site-src/README.ru.md site-src/CONTRIBUTING.md site-src/CONTRIBUTING.ru.md site-src/TESTING.md site-src/TESTING.ru.md site-src/CHANGELOG.md
 
           # English: file is named README.md (as in the repo), but is served at /
           {
@@ -72,6 +72,30 @@ jobs:
             echo '---'
             cat precizer/CONTRIBUTING.md
           } > site-src/CONTRIBUTING.md
+
+          # Russian contributing guide: file is named CONTRIBUTING.ru.md, served at /CONTRIBUTING.ru.html
+          {
+            echo '---'
+            echo 'permalink: /CONTRIBUTING.ru.html'
+            echo '---'
+            cat precizer/CONTRIBUTING.ru.md
+          } > site-src/CONTRIBUTING.ru.md
+
+          # Testing guide: file is named TESTING.md, served at /TESTING.html
+          {
+            echo '---'
+            echo 'permalink: /TESTING.html'
+            echo '---'
+            cat precizer/TESTING.md
+          } > site-src/TESTING.md
+
+          # Russian testing guide: file is named TESTING.ru.md, served at /TESTING.ru.html
+          {
+            echo '---'
+            echo 'permalink: /TESTING.ru.html'
+            echo '---'
+            cat precizer/TESTING.ru.md
+          } > site-src/TESTING.ru.md
 
           # Changelog: file is named CHANGELOG.md, served at /CHANGELOG.html
           {
