@@ -1,4 +1,4 @@
-title: precizer<br>Verifying data integrity across large file trees
+title: precizer<br>Data integrity verification for file systems of any scale
 description: precizer is a high-performance CLI for verifying data integrity across large file trees. It performs byte-for-byte comparisons to identify mismatches after synchronization, backed by a checksum database and persisted state for resumable long-running jobs, turning “seems fine” into “verified”
 theme: jekyll-theme-cayman
 
