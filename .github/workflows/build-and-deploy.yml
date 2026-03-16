@@ -29,7 +29,6 @@ jobs:
       - name: Prepare Jekyll source (site-src) from this repo + precizer READMEs
         run: |
           set -euo pipefail
-
           rm -rf site-src public
 
           # Copy EVERYTHING from the current repo into site-src (including _config.yml),
@@ -40,6 +39,8 @@ jobs:
             --exclude "site-src/" \
             --exclude "public/" \
             ./ site-src/
+          mv site-src/.html site-src/html
+          sed -i 's#/.html/#/html/#g' site-src/*.md
 
       - name: Checkout precizer sources
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
