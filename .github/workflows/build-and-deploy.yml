@@ -55,7 +55,7 @@ jobs:
           rm -f site-src/index.md site-src/README.md site-src/README.ru.md site-src/CONTRIBUTING.md site-src/CONTRIBUTING.ru.md site-src/TESTING.md site-src/TESTING.ru.md site-src/CHANGELOG.md
 
           mv precizer/.html precizer/html
-          sed -i 's#/.html/#/html/#g' precizer/*.md
+          sed -i 's#.html/#html/#g' precizer/*.md
           ls -la precizer
 
           # English: file is named README.md (as in the repo), but is served at /
