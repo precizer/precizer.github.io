@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout precizer.github.io repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -36,7 +36,7 @@ jobs:
             ./ site-src/
 
       - name: Checkout precizer sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: precizer/precizer
           ref: main
