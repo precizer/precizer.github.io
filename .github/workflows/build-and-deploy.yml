@@ -54,9 +54,9 @@ jobs:
           # Just in case, remove any old files
           rm -f site-src/index.md site-src/README.md site-src/README.ru.md site-src/CONTRIBUTING.md site-src/CONTRIBUTING.ru.md site-src/TESTING.md site-src/TESTING.ru.md site-src/CHANGELOG.md
 
+          # Support for moving files and directories that start with a dot has been deprecated
           mv precizer/.html precizer/html
           sed -i 's#.html/#html/#g' precizer/*.md
-          ls -la precizer
 
           # English: file is named README.md (as in the repo), but is served at /
           {
