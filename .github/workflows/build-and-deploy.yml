@@ -3,6 +3,9 @@ name: Build & Deploy site
 on:
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -15,10 +18,10 @@ jobs:
 
     steps:
       - name: Checkout precizer.github.io repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
 
       - name: Prepare Jekyll source (site-src) from this repo + precizer READMEs
         run: |
@@ -36,7 +39,7 @@ jobs:
             ./ site-src/
 
       - name: Checkout precizer sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: precizer/precizer
           ref: main
@@ -106,7 +109,7 @@ jobs:
           } > site-src/CHANGELOG.md
 
       - name: Build Jekyll site -> ./public
-        uses: actions/jekyll-build-pages@v1
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
         with:
           source: site-src
           destination: public
@@ -145,7 +148,7 @@ jobs:
           touch public/.nojekyll
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
         with:
           path: public
 
@@ -163,4 +166,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
