@@ -33,15 +33,12 @@ jobs:
 
           # Copy EVERYTHING from the current repo into site-src (including _config.yml),
           # excluding service directories.
-          ls -la
-          mv ./.html ./html
           rsync -a \
             --exclude ".git/" \
             --exclude ".github/" \
             --exclude "site-src/" \
             --exclude "public/" \
             ./ site-src/
-          sed -i 's#/.html/#/html/#g' site-src/*.md
 
       - name: Checkout precizer sources
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -56,6 +53,10 @@ jobs:
 
           # Just in case, remove any old files
           rm -f site-src/index.md site-src/README.md site-src/README.ru.md site-src/CONTRIBUTING.md site-src/CONTRIBUTING.ru.md site-src/TESTING.md site-src/TESTING.ru.md site-src/CHANGELOG.md
+
+          mv precizer/.html precizer/html
+          sed -i 's#/.html/#/html/#g' precizer/*.md
+          ls -la precizer
 
           # English: file is named README.md (as in the repo), but is served at /
           {
