@@ -148,7 +148,7 @@ jobs:
             "public/code_coverage_report/"
 
           rsync -a \
-            precizer/.html public/; ls -la public/
+            precizer/html public/; ls -la public/
 
           # Fallback in case hidden paths are served differently
           touch public/.nojekyll
