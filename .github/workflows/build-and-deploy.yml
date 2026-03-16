@@ -33,13 +33,14 @@ jobs:
 
           # Copy EVERYTHING from the current repo into site-src (including _config.yml),
           # excluding service directories.
+          ls -la
+          mv ./.html ./html
           rsync -a \
             --exclude ".git/" \
             --exclude ".github/" \
             --exclude "site-src/" \
             --exclude "public/" \
             ./ site-src/
-          mv site-src/.html site-src/html
           sed -i 's#/.html/#/html/#g' site-src/*.md
 
       - name: Checkout precizer sources
