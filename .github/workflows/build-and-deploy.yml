@@ -57,7 +57,7 @@ jobs:
           set -euo pipefail
 
           # Just in case, remove any old files
-          rm -f site-src/index.md site-src/README.md site-src/README.ru.md site-src/CONTRIBUTING.md site-src/CONTRIBUTING.ru.md site-src/TESTING.md site-src/TESTING.ru.md site-src/CHANGELOG.md
+          rm -f site-src/index.md site-src/README.md site-src/README.ru.md site-src/CONTRIBUTING.md site-src/CONTRIBUTING.ru.md site-src/TESTING.md site-src/TESTING.ru.md site-src/CHANGELOG.md site-src/precizer.conf.md
 
           # Support for moving files and directories that start with a dot has been deprecated
           mv precizer/.html precizer/html
@@ -118,6 +118,26 @@ jobs:
             echo '---'
             cat precizer/CHANGELOG.md
           } > site-src/CHANGELOG.md
+
+          # Configuration example: render the file and keep a plain-text copy for download
+          cp precizer/precizer.conf site-src/precizer.conf
+          {
+            echo '---'
+            echo 'layout: default'
+            echo 'title: precizer.conf'
+            echo 'permalink: /precizer.conf.html'
+            echo '---'
+            echo '# precizer.conf'
+            echo
+            echo '[Download precizer.conf](precizer.conf)'
+            echo
+            echo '```ini'
+            cat precizer/precizer.conf
+            echo '```'
+          } > site-src/precizer.conf.md
+
+          # README links open the rendered configuration example
+          sed -i 's#](precizer.conf)#](precizer.conf.html)#g' site-src/README.md site-src/README.ru.md
 
       - name: Build Jekyll site -> ./public
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
